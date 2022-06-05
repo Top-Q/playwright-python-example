@@ -3,3 +3,7 @@ videos/
 trace.zip
 __snapshots/
 .idea/
+test-results/
+.pytest_cache/
+state.json
+__pycache__/

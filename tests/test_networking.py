@@ -1,3 +1,4 @@
+from playwright.sync_api import Page
 
 
 def test_mock_response(page):
@@ -13,3 +14,11 @@ def test_http_auth(browser):
     )
     page = context.new_page()
     page.goto("http://localhost:8080/projects/selenium-project/")
+
+
+def test_log_network(page: Page):
+    page.on("request", lambda request: print(">>", request.method, request.url))
+    page.on("response", lambda response: print("<<", response.status, response.url))
+    page.goto("https://www.matrix.co.il/")
+    assert "לאתר הראשי הגלובלי" in page.inner_text("li.Matrix-global-site-btn")
+

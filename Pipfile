@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 pytest = "*"
 playwright = "*"
+pytest-playwright = "*"
+requests = "*"
+pytest-xdist = "*"
 
 [dev-packages]
 

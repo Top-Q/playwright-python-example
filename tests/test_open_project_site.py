@@ -1,56 +1,17 @@
-import pytest
 import string
 import random
-from playwright.sync_api import sync_playwright, expect
+from playwright.sync_api import expect, Page
 
 
-@pytest.fixture
-def browser():
-    playwright = sync_playwright().start()
-    browser = playwright.chromium.launch(headless=False)
-    yield browser
-    browser.close()
-
-
-trace = True
-log_network = True
-capture_video = False
-
-
-@pytest.fixture()
-def page(browser):
-    if capture_video:
-        context = browser.new_context(record_video_dir="playwright/videos/")
-    else:
-        context = browser.new_context()
-    if trace:
-        context.tracing.start(screenshots=True, snapshots=True, sources=True)
-    page = context.new_page()
-    if log_network:
-        page.on("request", lambda request: print(">>", request.method, request.url))
-        page.on("response", lambda response: print("<<", response.status, response.url))
-
-    yield page
-    if trace:
-        context.tracing.stop(path="../trace.zip")
-    context.close()
-
-
-def random_string(length: int = 10) -> str:
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(length))
-
-
-def test_create_and_delete_task(page):
-    page.goto("http://localhost:8080/", wait_until="networkidle")
+def test_create_and_delete_task(page: Page):
+    page.goto("/", wait_until="networkidle")
     page.locator("span:has-text('Sign in')").click()
-    page.locator("input[name='username']").fill("admin")
-    page.locator("input[name='password']").fill("adminadmin")
+    page.fill("text=Username", "admin")
+    page.fill("text=Password", "adminadmin")
 
     with page.expect_response("**/login") as response_info:
         page.locator("input:has-text('Sign in')").click()
     print(f"{response_info.value.status_text}({response_info.value.status}) - {response_info.value.url}")
-
     expect(page).to_have_url("http://localhost:8080/")
     page.locator("#projects-menu i").click()
 
@@ -62,7 +23,7 @@ def test_create_and_delete_task(page):
 
     page.locator("text=Create Include projects >> [aria-label='Create new work package']").click()
     page.locator("div#types-context-menu a[aria-label='Task']").click()
-    task_name = f"Task {random_string()}"
+    task_name = f"Task {''.join(random.choice(string.ascii_lowercase) for i in range(10))}"
     page.locator("id=wp-new-inline-edit--field-subject").fill(task_name)
     with page.expect_navigation():
         page.locator("button:has-text('Save')").click()
@@ -79,5 +40,3 @@ def test_create_and_delete_task(page):
     page.locator("button:has-text('Confirm')").click()
     page.locator("text=Successfully deleted work packages.").wait_for()
     page.locator("text=No work packages to display.").wait_for()
-
-    # ---------------------
