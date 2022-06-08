@@ -14,7 +14,7 @@ def authenticate(browser: Browser) -> Browser:
     with page.expect_response("**/login"):
         page.locator("input:has-text('Sign in')").click()
 
-    context.storage_state(path=r"..\state.json")
+    context.storage_state(path=r"../../state.json")
     context.close()
 
 

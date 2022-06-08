@@ -12,7 +12,7 @@ def test_save_storage_state(browser: Browser):
     with page.expect_response("**/login"):
         page.locator("input:has-text('Sign in')").click()
 
-    context.storage_state(path=r"..\state.json")
+    context.storage_state(path=r"../../state.json")
 
 
 def test_use_storage_state(browser: Browser):
