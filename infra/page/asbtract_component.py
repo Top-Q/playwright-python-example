@@ -1,14 +1,13 @@
-import re
-from abc import ABC, abstractmethod
+from abc import ABC
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, Locator
 
 
-class AbsPage(ABC):
+class AbsComponent(ABC):
 
-    def __init__(self, page: Page):
+    def __init__(self, page: Page, root: Locator):
         self._page = page
-        print(re.sub(r"(\w)([A-Z])", r"\1 \2", type(self).__name__))
+        self._root = root
 
     def __getattribute__(self, attr_name: str):
         if not attr_name.startswith("_"):
@@ -16,8 +15,3 @@ class AbsPage(ABC):
             self._page.evaluate(f"console.log('{message}')")
             print(message)
         return object.__getattribute__(self, attr_name)
-
-    @abstractmethod
-    def goto(self):
-        pass
-

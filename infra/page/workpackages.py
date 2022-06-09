@@ -3,6 +3,7 @@ from playwright.sync_api import Page, Locator
 
 from infra.page.abstract_page import AbsPage
 from infra.page.new_task import NewTaskPage
+from infra.page.table_comp import TableComponent
 
 
 class CreateMenuOptions(AbsPage):
@@ -43,7 +44,7 @@ class WorkPackagesPage(AbsPage):
         super().__init__(page)
         self._create_btn: Locator = page.locator("text=Create Include projects >> [aria-label='Create new work package']")
         self._filter_btn: Locator = page.locator("[aria-label='Activate Filter']")
-        self._table_body: Locator = page.locator("tbody.results-tbody")
+        self.table = TableComponent(page, page.locator("table"))
 
     def goto(self, project_name: str) -> WorkPackagesPage:
         url = f"/projects/{project_name}/work_packages".lower().replace(" ", "-")
@@ -57,8 +58,5 @@ class WorkPackagesPage(AbsPage):
     def click_on_filter_btn(self) -> FilterPage:
         self._filter_btn.click()
         return FilterPage(self._page)
-
-    def get_num_of_results(self) -> int:
-        return self._table_body.count()
 
 
