@@ -18,3 +18,6 @@ class OverviewPage(AbsPage):
     def click_on_main_menu_btn(self) -> MainMenuPage:
         self._main_menu_btn.click()
         return MainMenuPage(self._page)
+
+    def get_main_menu(self) -> MainMenuPage:
+        return MainMenuPage(self._page)

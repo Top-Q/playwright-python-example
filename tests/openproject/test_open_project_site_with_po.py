@@ -1,3 +1,7 @@
+import random
+import string
+
+from assertpy import assert_that
 from playwright.sync_api import Page
 from infra.page.welcome import WelcomePage
 
@@ -13,10 +17,27 @@ def test_create_and_delete_task(page: Page):
 
     overview_page = open_project_page.do_select_project("Selenium project")
     work_packages_page = overview_page\
-        .click_on_main_menu_btn()\
+        .get_main_menu()\
         .click_on_work_package_itm()
 
-    work_packages_page.click_on_create_btn()
+    new_task_page = work_packages_page\
+        .click_on_create_btn()\
+        .click_on_task_itm()
+
+    task_name = f"Task {''.join(random.choice(string.ascii_lowercase) for i in range(10))}"
+
+    new_task_page\
+        .fill_task_name_tb(task_name)\
+        .click_on_save_btn()
+
+    work_packages_page\
+        .goto("Selenium project")\
+        .click_on_filter_btn()\
+        .fill_filter_by_text_tb(task_name)
+
+    results = work_packages_page.get_num_of_results()
+    assert_that(results).is_equal_to(1)
+
 
 
 

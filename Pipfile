@@ -9,6 +9,7 @@ playwright = "*"
 pytest-playwright = "*"
 requests = "*"
 pytest-xdist = "*"
+assertpy = "*"
 
 [dev-packages]
 
