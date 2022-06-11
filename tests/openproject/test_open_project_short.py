@@ -34,6 +34,13 @@ def test_create_task(auth_page):
         .click_on_filter_btn() \
         .fill_filter_by_text_tb(task_name)
 
-    results = work_packages_page.get_num_of_results()
+    results = work_packages_page.table.get_num_of_rows()
     assert_that(results).is_equal_to(1)
+
+    work_packages_page.table\
+        .get_row("subject", task_name)\
+        .get_context_menu()\
+        .click_on_delete_itm()\
+        .click_on_confirm_btn()
+
 

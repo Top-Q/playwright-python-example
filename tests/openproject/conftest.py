@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from playwright.sync_api import Browser, Page
 
@@ -17,6 +19,7 @@ def authenticate(browser: Browser, pytestconfig) -> Browser:
         .fill_username_tb(username="admin") \
         .fill_password_tb("adminadmin") \
         .click_on_sign_in_btn_and_goto_open_project_page()
+    # time.sleep(2)
     context.storage_state(path=r"../../state.json")
     context.close()
 

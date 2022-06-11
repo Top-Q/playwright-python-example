@@ -19,22 +19,18 @@ class WelcomePage(AbsPage):
         return self
 
     def click_on_sign_in_toggle(self) -> WelcomePage:
-        self._sign_in_toggle.highlight()
         self._sign_in_toggle.click()
         return self
 
     def fill_username_tb(self, username) -> WelcomePage:
-        self._username_label.highlight()
         self._username_label.fill(username)
         return self
 
     def fill_password_tb(self, password) -> WelcomePage:
-        self._password_label.highlight()
         self._password_label.fill(password)
         return self
 
     def click_on_sign_in_btn_and_goto_open_project_page(self) -> OpenProjectPage:
         with self._page.expect_response("**/login"):
-            self._sign_in_btn.highlight()
             self._sign_in_btn.click()
         return OpenProjectPage(self._page)
