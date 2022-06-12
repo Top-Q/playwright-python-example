@@ -17,7 +17,7 @@ def test_create_and_delete_task(page: Page):
 
     with page.expect_navigation(url="http://localhost:8080/projects/selenium-project/"):
         page.locator("#ui-id-5 >> text=Selenium project").click()
-
+    page.pause()
     with page.expect_navigation(url="http://localhost:8080/projects/selenium-project/work_packages"):
         page.locator("#main-menu-work-packages >> text=Work packages").click()
 
