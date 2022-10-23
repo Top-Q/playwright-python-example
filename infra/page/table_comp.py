@@ -25,7 +25,7 @@ class RowContextMenu(AbsComponent):
     def __init__(self, page: Page, root: Locator):
         super().__init__(page, root)
 
-    def click_on_delete_itm(self) ->DeleteConfirmationDialogComp:
+    def click_on_delete_itm(self) -> DeleteConfirmationDialogComp:
         self._root.locator("[aria-label='Delete']").click()
         return DeleteConfirmationDialogComp(self._page, self._page.locator("id=wp_destroy_modal"))
 

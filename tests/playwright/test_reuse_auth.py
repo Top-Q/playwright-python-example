@@ -20,7 +20,7 @@ def authenticate(browser: Browser) -> Browser:
 
 @pytest.fixture(scope="function")
 def auth_page(browser: Browser) -> Page:
-    context = browser.new_context(storage_state=r"..\state.json")
+    context = browser.new_context(storage_state=r"..\..\state.json")
     page = context.new_page()
     yield page
     page.close()

@@ -3,19 +3,14 @@ from abc import ABC, abstractmethod
 
 from playwright.sync_api import Page
 
+from infra.page.asbtract_component import AbsComponent
 
-class AbsPage(ABC):
+
+class AbsPage(AbsComponent):
 
     def __init__(self, page: Page):
-        self._page = page
+        super().__init__(page, page)
         print(re.sub(r"(\w)([A-Z])", r"\1 \2", type(self).__name__))
-
-    def __getattribute__(self, attr_name: str):
-        if not attr_name.startswith("_"):
-            message = "\t" + attr_name.replace('_', ' ').capitalize()
-            self._page.evaluate(f"console.log('{message}')")
-            print(message)
-        return object.__getattribute__(self, attr_name)
 
     @abstractmethod
     def goto(self):
