@@ -6,7 +6,7 @@ import requests
 token = "638029b55b4ebf01ab3e473ac7cf172f02d4f8939a88a845d7e2e308cca61e32"
 
 
-def test_get_project_using_requests():
+def test_get_project_using_requests(report):
     url = f"http://localhost:8080/api/v3/projects/4"
     basic_auth = HTTPBasicAuth('apikey', f'{token}')
     response = requests.get(f"{url}", auth=basic_auth)

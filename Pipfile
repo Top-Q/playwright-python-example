@@ -10,6 +10,7 @@ pytest-playwright = "*"
 requests = "*"
 pytest-xdist = "*"
 assertpy = "*"
+pytest-difido = "*"
 
 [dev-packages]
 

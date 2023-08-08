@@ -7,3 +7,4 @@ test-results/
 .pytest_cache/
 state.json
 __pycache__/
+report/
