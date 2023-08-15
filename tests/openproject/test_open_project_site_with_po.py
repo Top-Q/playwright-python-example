@@ -1,5 +1,6 @@
 import random
 import string
+from infra.conf import config
 
 import pytest
 from assertpy import assert_that
@@ -15,8 +16,8 @@ def work_package_page_fixture(page: Page):
         open_project_page = welcome_page \
             .goto() \
             .click_on_sign_in_toggle() \
-            .fill_username_tb(username="admin") \
-            .fill_password_tb("adminadmin") \
+            .fill_username_tb(username=config.username) \
+            .fill_password_tb(config.password) \
             .click_on_sign_in_btn_and_goto_open_project_page()
     with And("in work packages page"):
         overview_page = open_project_page.do_select_project("Selenium project")
